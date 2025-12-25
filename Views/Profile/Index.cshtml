@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Profilim";
+
+}
+
+<div class="container mt-4">
+    <div class="row">
+
+        <!-- SOL MENÜ -->
+        <div class="col-md-3">
+            <div class="list-group shadow-sm">
+                <a href="#" class="list-group-item list-group-item-action"
+                   onclick="loadContent('ProfilBilgilerim')">
+                    <i class="fa fa-user me-2"></i> Profil Bilgilerim
+                </a>
+
+                <a href="#" class="list-group-item list-group-item-action"
+                   onclick="loadContent('Ilanlarim')">
+                    <i class="fa fa-home me-2"></i> İlanlarım
+                </a>
+
+                <a href="#" class="list-group-item list-group-item-action"
+                   onclick="loadContent('Favorilerim')">
+                    <i class="fa fa-heart me-2"></i> Favorilerim
+                </a>
+
+                <a href="#" class="list-group-item list-group-item-action"
+                   onclick="loadContent('SifreDegistir')">
+                    <i class="fa fa-lock me-2"></i> Şifre Değiştir
+                </a>
+
+                <a asp-controller="Kullanici" asp-action="Logout"
+                   class="list-group-item list-group-item-action text-danger">
+                    <i class="fa fa-sign-out-alt me-2"></i> Çıkış Yap
+                </a>
+            </div>
+        </div>
+
+        <!-- SAĞ İÇERİK -->
+        <div class="col-md-9">
+            <div id="contentArea" class="p-4 border rounded bg-white shadow-sm">
+                <div class="text-muted">Yükleniyor...</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        loadContent('ProfilBilgilerim');
+    });
+
+    function loadContent(action) {
+        fetch('/Profile/' + action)
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('contentArea').innerHTML = html;
+            });
+    }
+</script>
+<script>
+    function saveProfile() {
+        var form = document.getElementById('editProfileForm');
+        if (!form) {
+            alert("Form bulunamadı");
+            return;
+        }
+
+        var formData = new FormData(form);
+
+        fetch('/Profile/EditProfile', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.text())
+        .then(result => {
+            if (result === "success") {
+                loadContent('ProfilBilgilerim');
+            } else {
+                alert("Kaydedilemedi");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Bir hata oluştu");
+        });
+    }
+</script>

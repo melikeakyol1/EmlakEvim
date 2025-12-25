@@ -1,0 +1,15 @@
+﻿@model List<emlakdeneme.Models.Favori>
+
+<h4>Favorilerim</h4>
+<hr />
+
+<ul class="list-group">
+    @foreach (var fav in Model)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            @fav.Ilan.Baslik
+            <a asp-controller="Ilan" asp-action="Details" asp-route-id="@fav.IlanId"
+               class="btn btn-sm btn-outline-primary">Detay</a>
+        </li>
+    }
+</ul>

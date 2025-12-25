@@ -1,0 +1,92 @@
+﻿@model emlakdeneme.Models.Kullanici
+@{
+    ViewData["Title"] = "Üye Ol";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <title>Üye Ol</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #ffd194, #70e1f5);
+        }
+
+        .house {
+            width: 380px;
+            background: #ffffff;
+            border-radius: 0 0 20px 20px;
+            padding: 35px;
+            box-shadow: 0 20px 40px rgba(0,0,0,.25);
+            position: relative;
+        }
+
+        .roof {
+            position: absolute;
+            top: -90px;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background: #2c3e50;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .door {
+            background: #f2f2f2;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .form-control {
+            margin-bottom: 12px;
+        }
+
+        .btn-register {
+            width: 100%;
+            background: #2ecc71;
+            border: none;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="house">
+        <div class="roof"></div>
+
+        <div class="door">
+            <h4 class="text-center mb-3">🏡 Yeni Eve Taşın</h4>
+
+            <!-- FORM DEĞİŞMEDİ -->
+            <form asp-action="Register" method="post">
+                <input asp-for="AdSoyad" class="form-control" placeholder="İsim Soyisim" />
+                <input asp-for="Email" class="form-control" placeholder="E-Posta Adresi" />
+                <input asp-for="Sifre" type="password" class="form-control" placeholder="Şifre" />
+
+                <button type="submit" class="btn btn-register mt-2">
+                    🏠 Eve Taşın
+                </button>
+            </form>
+
+            <p class="text-center mt-3">
+                Zaten hesabın var mı?
+                <a asp-action="Login" asp-controller="Kullanici">Giriş Yap</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

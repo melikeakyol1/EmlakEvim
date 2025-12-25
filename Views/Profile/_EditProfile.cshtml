@@ -1,0 +1,22 @@
+﻿@model emlakdeneme.Models.Kullanici
+
+<h4>Profil Bilgilerini Düzenle</h4>
+<hr />
+
+<form id="editProfileForm">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="AdSoyad" class="form-label"></label>
+        <input asp-for="AdSoyad" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+
+    <button type="button" class="btn btn-success" onclick="saveProfile()">Kaydet</button>
+    <button type="button" class="btn btn-secondary" onclick="loadContent('ProfilBilgilerim')">İptal</button>
+</form>
+

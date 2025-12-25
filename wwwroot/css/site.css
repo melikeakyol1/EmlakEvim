@@ -1,0 +1,204 @@
+/* REGISTER PAGE DESIGN */
+.register-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #a4163a, #8e1b6c, #1f6fa3);
+}
+
+.register-card {
+    width: 100%;
+    max-width: 420px;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+    .register-card h2 {
+        font-size: 36px;
+        font-weight: bold;
+        color: #fff;
+    }
+
+.register-subtitle {
+    color: #ddd;
+    margin-bottom: 30px;
+}
+
+.register-input {
+    border-radius: 30px !important;
+    padding: 14px 18px;
+    background: rgba(0, 0, 0, 0.4) !important;
+    color: #fff !important;
+    border: none;
+}
+
+    .register-input::placeholder {
+        color: #ccc;
+    }
+
+.register-btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 30px;
+    background: #fff;
+    color: #1f6fa3;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    margin-top: 10px;
+}
+
+    .register-btn:hover {
+        opacity: 0.9;
+    }
+
+.register-link {
+    color: #fff;
+    font-weight: bold;
+    text-decoration: underline;
+}
+/* Register / Login FULL SCREEN FIX */
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* Sadece tam ekran sayfalar için */
+.register-page {
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+/* ===== EMLAK SÝTESÝ NAVBAR TEMA (LACÝVERT) ===== */
+
+.navbar {
+    background: linear-gradient( 90deg, #0a1628, /* koyu lacivert */
+    #0f2a44, /* ana lacivert */
+    #143c5a /* açýk lacivert */
+    ) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+}
+
+    /* Navbar linkleri */
+    .navbar .nav-link,
+    .navbar-brand {
+        color: #ffffff !important;
+    }
+
+/* Logo */
+.navbar-brand {
+    font-size: 1.45rem;
+    letter-spacing: 0.6px;
+    font-weight: 600;
+}
+
+/* Arama input */
+.navbar .form-control {
+    border-radius: 25px;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding-left: 16px;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+}
+
+    .navbar .form-control::placeholder {
+        color: #d0d7de;
+    }
+
+/* Arama butonu */
+.navbar .btn-primary {
+    border-radius: 25px;
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+    border: none;
+}
+
+    .navbar .btn-primary:hover {
+        background: linear-gradient(135deg, #16a085, #12876f);
+    }
+
+/* Saðdaki küçük butonlar */
+.navbar .btn {
+    border-radius: 25px;
+    font-weight: 500;
+}
+
+    /* Navbar hover hissi */
+    .navbar .btn:hover {
+        transform: translateY(-1px);
+        transition: 0.2s ease;
+    }
+/* ===== FÝLTRE KUTUSU ===== */
+.filter-box {
+    background: #ffffff;
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+    .filter-box label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #34495e;
+    }
+
+    .filter-box .form-control {
+        border-radius: 12px;
+        border: 1px solid #e0e6ed;
+        transition: all 0.2s ease;
+    }
+
+        .filter-box .form-control:focus {
+            border-color: #1abc9c;
+            box-shadow: 0 0 0 0.15rem rgba(26,188,156,0.25);
+        }
+    /* ===== FÝLTRELE BUTONU ===== */
+    .filter-box .btn-primary {
+        background: linear-gradient(135deg, #1abc9c, #16a085);
+        border: none;
+        border-radius: 30px;
+        font-size: 0.95rem;
+        letter-spacing: 0.3px;
+        transition: all 0.25s ease;
+    }
+
+        .filter-box .btn-primary:hover {
+            background: linear-gradient(135deg, #16a085, #12876f);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(22,160,133,0.35);
+        }
+/* ===== ÝLAN KART BUTONU ===== */
+.card .btn-primary {
+    background: linear-gradient(135deg, #0f2a44, #143c5a);
+    border: none;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    transition: all 0.25s ease;
+}
+
+    .card .btn-primary:hover {
+        background: linear-gradient(135deg, #143c5a, #1b4f72);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(15,42,68,0.4);
+    }
+/* ===== ÝLAN KART ===== */
+.card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: all 0.25s ease;
+}
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+    }

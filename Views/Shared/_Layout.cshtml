@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - Emlak Evim</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+            <div class="container-fluid">
+
+                <!-- LOGO -->
+                <a class="navbar-brand fw-bold d-flex align-items-center"
+                   asp-controller="Home" asp-action="Index">
+                    Emlak Evim 🏠
+                </a>
+
+                <!-- SEARCH -->
+                <form class="d-flex mx-4 w-50" asp-controller="Ilan" asp-action="Index" method="get">
+                    <input class="form-control me-2" type="search" name="q" placeholder="Arama">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-search"></i> Ara
+                    </button>
+                </form>
+
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav me-auto"></ul>
+
+                    <ul class="navbar-nav align-items-center">
+
+                        <li class="nav-item me-2">
+                            <a class="btn btn-outline-light btn-sm"
+                               asp-controller="Profile" asp-action="Index">
+                                👤 Profilim
+                            </a>
+                        </li>
+
+                        <li class="nav-item me-2">
+                            <a class="btn btn-primary btn-sm"
+                               asp-controller="Kullanici" asp-action="Register">
+                                🧑‍💻 Üye Ol
+                            </a>
+                        </li>
+
+                        <li class="nav-item me-2">
+                            <a class="btn btn-success btn-sm"
+                               asp-controller="Kullanici" asp-action="Login">
+                                🔑 Giriş
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="btn btn-info btn-sm text-white"
+                               asp-controller="Ilan" asp-action="Create">
+                                📢 İlan Ver
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-3">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="bg-dark text-white mt-5 p-4 text-center">
+        &copy; 2025 - Emlak Evim
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,65 @@
+﻿@model Ilan
+
+<div class="container mt-4">
+    <div class="row">
+
+        <!-- SOL TARAF: FOTOĞRAF -->
+        <div class="col-md-8">
+            <div class="border">
+                <img src="@Model.Resim"
+                     class="img-fluid w-100"
+                     style="max-height:500px; object-fit:cover;" />
+            </div>
+        </div>
+
+        <!-- SAĞ TARAF: İLAN BİLGİLERİ -->
+        <div class="col-md-4">
+            <h4 class="mb-3">İlan Özellikleri</h4>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Açıklama</th>
+                    <td>@Model.Baslik</td>
+                </tr>
+                <tr>
+                    <th>Fiyat</th>
+                    <td>@Model.Fiyat ₺</td>
+                </tr>
+                <tr>
+                    <th>Durum</th>
+                    <td>@Model.Durum</td>
+                </tr>
+                <tr>
+                    <th>Tip</th>
+                    <td>@Model.Tip</td>
+                </tr>
+                <tr>
+                    <th>Alan</th>
+                    <td>@Model.Metrekare m²</td>
+                </tr>
+                <tr>
+                    <th>Oda Sayısı</th>
+                    <td>@Model.Oda</td>
+                </tr>
+                <tr>
+                    <th>Mahalle</th>
+                    <td>@Model.Mahalle</td>
+                </tr>
+                <tr>
+                    <th>Semt</th>
+                    <td>@Model.Semt</td>
+                </tr>
+                <tr>
+                    <th>Şehir</th>
+                    <td>@Model.Sehir</td>
+                </tr>
+            </table>
+
+            <a href="tel:02122121212" class="btn btn-success w-100">
+                📞 0212 212 12 12
+            </a>
+        </div>
+
+    </div>
+</div>
+

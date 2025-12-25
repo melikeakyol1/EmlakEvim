@@ -1,0 +1,17 @@
+﻿@model emlakdeneme.Models.Ilan
+
+<h2>İlanı Sil</h2>
+<p>Bu ilanı silmek istediğinizden emin misiniz?</p>
+
+<div>
+    <h4>@Model.Baslik</h4>
+    <p>Fiyat: @Model.Fiyat</p>
+    <p>Şehir: @Model.Sehir</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>

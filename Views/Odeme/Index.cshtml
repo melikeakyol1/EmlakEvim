@@ -1,0 +1,24 @@
+﻿@model List<Odeme>
+
+<div class="container mt-4">
+    <h3>Ödeme Geçmişi</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tarih</th>
+                <th>Tutar</th>
+                <th>Ödeme Yöntemi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td>@o.Tarih</td>
+                    <td>@o.Tutar.ToString("C")</td>
+                    <td>@o.OdemeYontemi</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

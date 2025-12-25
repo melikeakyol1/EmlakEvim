@@ -1,0 +1,111 @@
+﻿@model HomeIndexViewModel
+
+<!-- SLIDER -->
+<div id="emlakSlider" class="carousel slide mt-3" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#emlakSlider" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#emlakSlider" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#emlakSlider" data-bs-slide-to="2"></button>
+    </div>
+
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/images/slider7.jpg" class="d-block w-100" style="height:500px; object-fit:cover;">
+            <div class="carousel-caption d-none d-md-block">
+                <h3>Satılık Daire</h3>
+                <p>Şehir merkezinde geniş, modern daire.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
+                 class="d-block w-100" style="height:500px; object-fit:cover;">
+            <div class="carousel-caption d-none d-md-block">
+                <h3>Kiralık Villa</h3>
+                <p>Doğa ile iç içe yaşam alanı.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/images/evvvv.jpg" class="d-block w-100" style="height:500px; object-fit:cover;">
+            <div class="carousel-caption d-none d-md-block">
+                <h3>Site İçinde Güvenlik</h3>
+                <p>Sosyal alanlar, otopark, 7/24 güvenlik.</p>
+            </div>
+        </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#emlakSlider" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#emlakSlider" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+<!-- SAYFA İÇERİĞİ -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- SOL FİLTRELEME: Filtre uygulanmamışsa göster -->
+        @if (!(ViewBag.FiltreUygulandi as bool? ?? false))
+        {
+            <div class="col-md-3 mt-4">
+                <h5 class="mb-3 fw-bold">Filtreleme</h5>
+                <div class="filter-box p-3 border rounded shadow-sm bg-light">
+                    <form method="get" asp-controller="Ilan" asp-action="Index">
+                        <div class="d-flex align-items-center mb-2">
+                            <label class="me-2" style="width: 90px;">En Az:</label>
+                            <input type="number" name="minFiyat" class="form-control" placeholder="0">
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <label class="me-2" style="width: 90px;">En Çok:</label>
+                            <input type="number" name="maxFiyat" class="form-control" placeholder="2000000">
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <label class="me-2" style="width: 90px;">Şehir:</label>
+                            <input type="text" name="sehir" class="form-control" placeholder="Şehir">
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <label class="me-2" style="width: 90px;">Semt:</label>
+                            <input type="text" name="semt" class="form-control" placeholder="Semt">
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <label class="me-2" style="width: 90px;">Durum:</label>
+                            <input type="text" name="durum" class="form-control" placeholder="Satılık/Kiralık">
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <label class="me-2" style="width: 90px;">Tip:</label>
+                            <input type="text" name="tip" class="form-control" placeholder="Daire, Arsa...">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 fw-bold py-2">🔍 Filtrele</button>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <!-- İLAN LİSTELEME: her zaman göster -->
+        <div class="col-md-@( (ViewBag.FiltreUygulandi as bool? ?? false) ? 12 : 9 ) mt-4">
+            <div class="row">
+                @foreach (var ilan in Model.YeniIlanlar)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <img src="@ilan.Resim" class="card-img-top" alt="@ilan.Baslik" style="height:220px; object-fit:cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">@ilan.Baslik</h5>
+                                <p class="card-text">
+                                    @ilan.Sehir / @ilan.Semt <br />
+                                    <strong>@ilan.Fiyat ₺</strong>
+                                </p>
+                                <a asp-controller="Ilan"
+                                   asp-action="Details"
+                                   asp-route-id="@ilan.Id"
+                                   class="btn btn-primary">
+                                    Detayları Gör
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

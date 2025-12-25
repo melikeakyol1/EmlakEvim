@@ -1,0 +1,44 @@
+﻿@model List<emlakdeneme.Models.Ilan>
+
+@{
+    ViewData["Title"] = "İlan Onay";
+}
+
+<h2>Onay Bekleyen İlanlar</h2>
+<hr />
+
+@if (!Model.Any())
+{
+    <div class="alert alert-success">
+        Onay bekleyen ilan yok 👍
+    </div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Başlık</th>
+                <th>Fiyat</th>
+                <th>Şehir</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ilan in Model)
+            {
+                <tr>
+                    <td>@ilan.Baslik</td>
+                    <td>@ilan.Fiyat ₺</td>
+                    <td>@ilan.Sehir</td>
+                    <td>
+                        <a asp-action="Onayla" asp-route-id="@ilan.Id"
+                           class="btn btn-sm btn-success">
+                            Onayla
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

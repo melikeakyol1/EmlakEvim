@@ -1,0 +1,25 @@
+﻿@model List<emlakdeneme.Models.Ilan>
+
+<h4>İlanlarım</h4>
+<hr />
+
+<div class="row">
+    @foreach (var ilan in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <img src="@ilan.Resim" class="card-img-top">
+                <div class="card-body">
+                    <h6>@ilan.Baslik</h6>
+                    <p>@ilan.Fiyat ₺</p>
+
+                    <a asp-controller="Ilan" asp-action="Edit" asp-route-id="@ilan.Id"
+                       class="btn btn-sm btn-warning">Düzenle</a>
+
+                    <a asp-controller="Ilan" asp-action="Delete" asp-route-id="@ilan.Id"
+                       class="btn btn-sm btn-danger">Sil</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

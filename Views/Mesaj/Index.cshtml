@@ -1,0 +1,16 @@
+﻿@model List<Mesaj>
+
+<div class="container mt-4">
+    <h3>Mesajlar</h3>
+
+    @foreach (var mesaj in Model)
+    {
+        <div class="card mb-2">
+            <div class="card-body">
+                <h6>Gönderen: @mesaj.Gonderen.AdSoyad | Alıcı: @mesaj.Alici.AdSoyad</h6>
+                <p>@mesaj.Icerik</p>
+                <small>@mesaj.Tarih</small>
+            </div>
+        </div>
+    }
+</div>

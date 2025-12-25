@@ -1,0 +1,42 @@
+﻿@model List<Favori>
+
+<div class="container mt-4">
+    <h3>❤️ Favori İlanlarım</h3>
+
+    <div class="row g-3">
+        @foreach (var fav in Model)
+        {
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <img src="@fav.Ilan.Resim"
+                         class="card-img-top"
+                         style="height:200px; object-fit:cover;" />
+
+                    <div class="card-body">
+                        <h5>@fav.Ilan.Durum (@fav.Ilan.Tip)</h5>
+                        <p>@fav.Ilan.Sehir - @fav.Ilan.Semt</p>
+                        <p class="fw-bold">@fav.Ilan.Fiyat ₺</p>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-controller="Ilan"
+                               asp-action="Details"
+                               asp-route-id="@fav.Ilan.Id"
+                               class="btn btn-sm btn-primary">
+                                Detay
+                            </a>
+
+                            <form asp-controller="Favori"
+                                  asp-action="Remove"
+                                  method="post">
+                                <input type="hidden" name="ilanId" value="@fav.Ilan.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    ❤️ Kaldır
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

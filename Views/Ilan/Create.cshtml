@@ -1,0 +1,161 @@
+﻿@model emlakdeneme.Models.Ilan
+
+@{
+    ViewData["Title"] = "Yeni İlan Ekle";
+}
+
+<style>
+    body {
+        background: linear-gradient(to bottom, #e0f2ff, #ffffff);
+    }
+
+    .house-form-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+        margin-bottom: 60px;
+    }
+
+    .house-form {
+        width: 100%;
+        max-width: 700px;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        overflow: hidden;
+    }
+
+    .house-roof {
+        height: 80px;
+        background: #2c3e50;
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+
+    .house-body {
+        padding: 35px;
+    }
+
+    .house-title {
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: bold;
+    }
+
+    .section-title {
+        margin-top: 25px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        height: 45px;
+    }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+        font-size: 18px;
+        background: linear-gradient(to right, #2ecc71, #27ae60);
+        border: none;
+        color: #fff;
+    }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
+</style>
+
+<div class="house-form-wrapper">
+    <div class="house-form">
+
+        <!-- ÇATI -->
+        <div class="house-roof"></div>
+
+        <!-- GÖVDE -->
+        <div class="house-body">
+
+            <h3 class="house-title">🏡 Yeni İlan Oluştur</h3>
+
+            <!-- FORM (HİÇ DEĞİŞMEDİ) -->
+            <form asp-action="Create" method="post">
+
+                <div class="section-title">📌 Genel Bilgiler</div>
+
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label>Başlık</label>
+                        <input asp-for="Baslik" class="form-control" placeholder="Modern 3+1 Daire" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Durum</label>
+                        <input asp-for="Durum" class="form-control" placeholder="Satılık / Kiralık" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Tip</label>
+                        <input asp-for="Tip" class="form-control" placeholder="Daire, Arsa, Dükkan" />
+                    </div>
+                </div>
+
+                <div class="section-title">📍 Konum Bilgileri</div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label>Şehir</label>
+                        <input asp-for="Sehir" class="form-control" />
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>Semt</label>
+                        <input asp-for="Semt" class="form-control" />
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>Mahalle</label>
+                        <input asp-for="Mahalle" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="section-title">🏠 Özellikler</div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label>Fiyat</label>
+                        <input asp-for="Fiyat" class="form-control" />
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>Metrekare</label>
+                        <input asp-for="Metrekare" class="form-control" />
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>Oda</label>
+                        <input asp-for="Oda" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="section-title">🖼️ Görsel</div>
+
+                <div class="mb-4">
+                    <label>Resim URL</label>
+                    <input asp-for="Resim" class="form-control" placeholder="https://..." />
+                </div>
+
+                <button type="submit" class="btn btn-submit">
+                    📢 İlanı Yayınla
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
