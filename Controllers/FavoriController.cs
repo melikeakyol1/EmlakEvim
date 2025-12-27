@@ -14,7 +14,7 @@ namespace emlakdeneme.Controllers
             _context = context;
         }
 
-        // ❤️ Favorilerim
+        // Favorilerim
         public async Task<IActionResult> Index()
         {
             int kullaniciId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -27,7 +27,7 @@ namespace emlakdeneme.Controllers
             return View(favoriler);
         }
 
-        // 🤍 Favoriye ekle
+        // Favoriye ekle
         [HttpPost]
         public async Task<IActionResult> Add(int ilanId)
         {
@@ -57,7 +57,7 @@ namespace emlakdeneme.Controllers
         }
 
 
-        // ❤️ Favoriden kaldır
+        // Favoriden kaldır
         [HttpPost]
         public async Task<IActionResult> Remove(int ilanId)
         {
@@ -81,40 +81,7 @@ namespace emlakdeneme.Controllers
         }
     }
 }
-/*using emlakdeneme.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace emlakdeneme.Controllers
-{
-    public class FavoriController : Controller
-    {
-        private readonly ApplicationDbContext _context;
-
-        public FavoriController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<IActionResult> Index(int kullaniciId)
-        {
-            var favoriler = await _context.Favoriler
-                .Where(f => f.KullaniciId == kullaniciId)
-                .Include(f => f.Ilan)
-                .ToListAsync();
-
-            return View(favoriler);
-        }
-
-
-        public async Task<IActionResult> Add(int ilanId, int kullaniciId)
-        {
-            var favori = new Favori { IlanId = ilanId, KullaniciId = kullaniciId };
-            _context.Favoriler.Add(favori);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Ilan");
-        }
-    }
 
 }
 */
