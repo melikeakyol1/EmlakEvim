@@ -44,7 +44,7 @@
 <!-- SAYFA İÇERİĞİ -->
 <div class="container mt-4">
     <div class="row">
-        <!-- SOL FİLTRELEME: Filtre uygulanmamışsa göster -->
+        <!-- SOL FİLTRELEME-->
         @if (!(ViewBag.FiltreUygulandi as bool? ?? false))
         {
             <div class="col-md-3 mt-4">
@@ -81,7 +81,7 @@
             </div>
         }
 
-        <!-- İLAN LİSTELEME: her zaman göster -->
+        <!-- İLAN LİSTELEME-->
         <div class="col-md-@( (ViewBag.FiltreUygulandi as bool? ?? false) ? 12 : 9 ) mt-4">
             <div class="row">
                 @foreach (var ilan in Model.YeniIlanlar)
