@@ -84,13 +84,11 @@ namespace emlakdeneme.Controllers
                 return PartialView("_SifreDegistir", model);
             }
 
-            // GERÇEK GÜNCELLEME
             user.Sifre = model.YeniSifre;
             _context.SaveChanges();
 
             TempData["Success"] = "Şifreniz başarıyla değiştirildi";
 
-            // PROFİL SAYFASINA GERİ DÖN
             return RedirectToAction("Index");
         }
 
@@ -111,7 +109,6 @@ namespace emlakdeneme.Controllers
 
             if (user != null)
             {
-                // Gelen yeni değerleri ata
                 user.AdSoyad = model.AdSoyad;
                 user.Email = model.Email;
                 user.Telefon = model.Telefon;
@@ -125,7 +122,6 @@ namespace emlakdeneme.Controllers
             return Content("error");
         }
 
-        // GET: partial view olarak formu yükle
         public IActionResult EditProfileForm()
         {
             var userId = GetUserId();
