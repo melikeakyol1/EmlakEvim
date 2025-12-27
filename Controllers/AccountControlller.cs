@@ -18,7 +18,6 @@ namespace emlakdeneme.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
-            // Minimal örnek: kullanıcı ve şifreyi sabit tanımlıyoruz
             if (username == "admin" && password == "1234")
             {
                 var claims = new List<Claim>
