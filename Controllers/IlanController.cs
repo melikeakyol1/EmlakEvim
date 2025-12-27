@@ -31,7 +31,7 @@ namespace emlakdeneme.Controllers
             var ilanlar = _context.Ilanlar
     .Where(x => x.Onaylandi)
     .AsQueryable();
-            // 🔍 NAVBAR ARAMA
+            // NAVBAR ARAMA
             if (!string.IsNullOrWhiteSpace(q))
             {
                 q = q.ToLower();
@@ -60,7 +60,7 @@ namespace emlakdeneme.Controllers
             if (!string.IsNullOrEmpty(semt))
                 ilanlar = ilanlar.Where(x => x.Semt.ToLower().Contains(semt.ToLower()));
 
-            // 💰 Fiyat filtreleme
+            // Fiyat filtreleme
             if (minFiyat.HasValue)
                 ilanlar = ilanlar.Where(x => x.Fiyat >= minFiyat.Value);
 
@@ -101,13 +101,11 @@ namespace emlakdeneme.Controllers
 
             ilan.KullaniciId = kullaniciId.Value;
 
-            // 🔴 SORUN BURADAYDI → EKLİYORSUN
             ilan.Onaylandi = false;
 
             _context.Ilanlar.Add(ilan);
             await _context.SaveChangesAsync();
-
-            // 👉 Admin onay sayfasına düşecek
+            
             return RedirectToAction("IlanOnay", "Admin");
         
         }
@@ -181,11 +179,9 @@ namespace emlakdeneme.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> IslemiYap(int ilanId, string islemTipi, string odemeTipi)
         {
-            // İlanı al
             var ilan = await _context.Ilanlar.FindAsync(ilanId);
             if (ilan == null) return NotFound();
 
-            // Giriş yapan kullanıcının Id'sini session'dan al
             var kullaniciId = HttpContext.Session.GetInt32("KullaniciId");
             if (kullaniciId == null)
             {
@@ -193,7 +189,6 @@ namespace emlakdeneme.Controllers
                 return RedirectToAction("Login", "Kullanici"); // Login sayfasına yönlendir
             }
 
-            // Satın alma veya kiralama durumunu kontrol et
             if (islemTipi == "Satın Alma")
             {
                 if (ilan.SatildiMi)
@@ -213,7 +208,7 @@ namespace emlakdeneme.Controllers
                 ilan.KiralandiMi = true;
             }
 
-            // Ödeme Durumu (Sanal ödeme olduğu için hemen başarılı)
+            // Ödeme Durumu
             var odemeDurumu = "Başarılı";
 
             var islem = new Islem
