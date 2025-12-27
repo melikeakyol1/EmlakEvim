@@ -55,15 +55,12 @@ namespace emlakdeneme.Controllers
 
             if (user != null)
             {
-                // Temel kullanıcı bilgilerini session'a atıyoruz
                 HttpContext.Session.SetInt32("KullaniciId", user.Id);
                 HttpContext.Session.SetString("KullaniciAd", user.AdSoyad);
 
-                // ROL KONTROLÜ: Eğer kullanıcının rolü varsa adını, yoksa varsayılan "Kullanıcı" yazıyoruz
                 string rolAdi = user.Rol?.Ad ?? "Kullanıcı";
                 HttpContext.Session.SetString("UserRole", rolAdi);
 
-                // Eğer Admin ise doğrudan Admin Paneline, değilse Ana Sayfaya yönlendir
                 if (rolAdi == "Admin")
                 {
                     return RedirectToAction("Index", "Admin");
@@ -81,13 +78,11 @@ namespace emlakdeneme.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET
         public IActionResult ForgotPassword()
         {
             return View();
         }
 
-        // POST
         [HttpPost]
         public IActionResult ForgotPassword(string email)
         {
