@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Linq;
 using emlakdeneme.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace emlakdeneme.Controllers
 {
@@ -17,7 +19,7 @@ namespace emlakdeneme.Controllers
 
         // GET: /Ilan/Index
         public async Task<IActionResult> Index(
-            string q,              
+            string q,
             string durum,
             string tip,
             string sehir,
@@ -68,15 +70,22 @@ namespace emlakdeneme.Controllers
             return View(await ilanlar.ToListAsync());
         }
 
-        // GET: /Ilan/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var ilan = await _context.Ilanlar.FirstOrDefaultAsync(i => i.Id == id);
+            var ilan = await _context.Ilanlar
+                .Include(i => i.IlanResimler)
+                .FirstOrDefaultAsync(i => i.Id == id);
+
             if (ilan == null) return NotFound();
+
+            ViewBag.Mesajlar = await _context.Mesajlar
+                .Include(m => m.Gonderen)
+                .Where(m => m.IlanId == id)
+                .OrderByDescending(m => m.Tarih)
+                .ToListAsync();
 
             return View(ilan);
         }
-
         // GET: /Ilan/Create
         public IActionResult Create()
         {
@@ -87,24 +96,20 @@ namespace emlakdeneme.Controllers
         public async Task<IActionResult> Create(Ilan ilan)
         {
             var kullaniciId = HttpContext.Session.GetInt32("KullaniciId");
-
             if (kullaniciId == null)
                 return RedirectToAction("Login", "Kullanici");
 
-            if (ModelState.IsValid)
-            {
-                ilan.KullaniciId = kullaniciId.Value;
-                ilan.Onaylandi = false;  // Admin onayı bekleyecek
-                ilan.Kullanici = null;   // ⚡ Burayı ekledik, hata önlendi
+            ilan.KullaniciId = kullaniciId.Value;
 
-                _context.Ilanlar.Add(ilan);
-                await _context.SaveChangesAsync();
+            // 🔴 SORUN BURADAYDI → EKLİYORSUN
+            ilan.Onaylandi = false;
 
-                // Admin onay sayfasına yönlendirelim
-                return RedirectToAction("IlanOnay", "Admin");
-            }
+            _context.Ilanlar.Add(ilan);
+            await _context.SaveChangesAsync();
 
-            return View(ilan);
+            // 👉 Admin onay sayfasına düşecek
+            return RedirectToAction("IlanOnay", "Admin");
+        
         }
         // GET: /Ilan/Edit/5
         public async Task<IActionResult> Edit(int id)
@@ -119,16 +124,27 @@ namespace emlakdeneme.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Ilan ilan)
         {
+
             if (id != ilan.Id) return NotFound();
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(ilan);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            var dbIlan = await _context.Ilanlar.FindAsync(id);
+            if (dbIlan == null) return NotFound();
 
-            return View(ilan);
+            dbIlan.Baslik = ilan.Baslik;
+            dbIlan.Durum = ilan.Durum;
+            dbIlan.Tip = ilan.Tip;
+            dbIlan.Sehir = ilan.Sehir;
+            dbIlan.Semt = ilan.Semt;
+            dbIlan.Mahalle = ilan.Mahalle;
+            dbIlan.Fiyat = ilan.Fiyat;
+            dbIlan.Metrekare = ilan.Metrekare;
+            dbIlan.Oda = ilan.Oda;
+            dbIlan.Resim = ilan.Resim;
+
+            await _context.SaveChangesAsync();
+            TempData["Success"] = "İlan başarıyla güncellendi.";
+            return RedirectToAction(nameof(Index));
+
         }
 
         // GET: /Ilan/Delete/5
@@ -157,6 +173,64 @@ namespace emlakdeneme.Controllers
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
+        }
+    
+
+
+[HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> IslemiYap(int ilanId, string islemTipi, string odemeTipi)
+        {
+            // İlanı al
+            var ilan = await _context.Ilanlar.FindAsync(ilanId);
+            if (ilan == null) return NotFound();
+
+            // Giriş yapan kullanıcının Id'sini session'dan al
+            var kullaniciId = HttpContext.Session.GetInt32("KullaniciId");
+            if (kullaniciId == null)
+            {
+                TempData["Mesaj"] = "Lütfen giriş yapın.";
+                return RedirectToAction("Login", "Kullanici"); // Login sayfasına yönlendir
+            }
+
+            // Satın alma veya kiralama durumunu kontrol et
+            if (islemTipi == "Satın Alma")
+            {
+                if (ilan.SatildiMi)
+                {
+                    TempData["Mesaj"] = "Bu ilan zaten satılmış!";
+                    return RedirectToAction("Details", new { id = ilanId });
+                }
+                ilan.SatildiMi = true;
+            }
+            else if (islemTipi == "Kiralama")
+            {
+                if (ilan.KiralandiMi)
+                {
+                    TempData["Mesaj"] = "Bu ilan zaten kiralanmış!";
+                    return RedirectToAction("Details", new { id = ilanId });
+                }
+                ilan.KiralandiMi = true;
+            }
+
+            // Ödeme Durumu (Sanal ödeme olduğu için hemen başarılı)
+            var odemeDurumu = "Başarılı";
+
+            var islem = new Islem
+            {
+                IlanId = ilanId,
+                KullaniciId = kullaniciId.Value,
+                IslemTipi = islemTipi,
+                OdemeTipi = odemeTipi,
+                OdemeDurumu = odemeDurumu,
+                Tarih = DateTime.Now
+            };
+
+            _context.Islemler.Add(islem);
+            await _context.SaveChangesAsync();
+
+            TempData["Mesaj"] = $"{islemTipi} işlemi başarıyla yapıldı! Ödeme yöntemi: {odemeTipi}";
+            return RedirectToAction("Details", new { id = ilanId });
         }
     }
 }

@@ -1,0 +1,33 @@
+﻿@model emlakdeneme.Models.ViewModels.SifreDegistirViewModel
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<form method="post" asp-action="SifreDegistir" asp-controller="Profile">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label>Mevcut Şifre</label>
+        <input asp-for="EskiSifre" type="password" class="form-control" />
+        <span asp-validation-for="EskiSifre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Yeni Şifre</label>
+        <input asp-for="YeniSifre" type="password" class="form-control" />
+        <span asp-validation-for="YeniSifre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Yeni Şifre (Tekrar)</label>
+        <input asp-for="YeniSifreTekrar" type="password" class="form-control" />
+        <span asp-validation-for="YeniSifreTekrar" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Şifre Değiştir
+    </button>
+</form>
+

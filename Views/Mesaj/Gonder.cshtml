@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Mesaj Gönder";
+    var ilanId = ViewBag.IlanId;
+}
+
+<div class="container mt-4">
+    <h3>İlan Sahibine Mesaj Gönder</h3>
+
+    <form asp-controller="Mesaj" asp-action="Gonder" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="ilanId" value="@ilanId" />
+        <div class="mb-3">
+            <label>Mesajınız</label>
+            <textarea name="icerik" class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Mesaj Gönder</button>
+    </form>
+
+    @if (TempData["Mesaj"] != null)
+    {
+        <div class="alert alert-success mt-3">@TempData["Mesaj"]</div>
+    }
+</div>

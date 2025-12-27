@@ -22,6 +22,44 @@ namespace emlakdeneme.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Islem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("IlanId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IslemTipi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("KullaniciId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OdemeDurumu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OdemeTipi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Tarih")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IlanId");
+
+                    b.HasIndex("KullaniciId");
+
+                    b.ToTable("Islemler");
+                });
+
             modelBuilder.Entity("emlakdeneme.Models.Favori", b =>
                 {
                     b.Property<int>("Id")
@@ -45,7 +83,7 @@ namespace emlakdeneme.Migrations
 
                     b.HasIndex("KullaniciId");
 
-                    b.ToTable("Favoriler", (string)null);
+                    b.ToTable("Favoriler");
                 });
 
             modelBuilder.Entity("emlakdeneme.Models.Ilan", b =>
@@ -67,10 +105,10 @@ namespace emlakdeneme.Migrations
                     b.Property<decimal>("Fiyat")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("KullaniciId")
-                        .HasColumnType("int");
+                    b.Property<bool>("KiralandiMi")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("KullaniciId1")
+                    b.Property<int?>("KullaniciId")
                         .HasColumnType("int");
 
                     b.Property<string>("Mahalle")
@@ -90,6 +128,9 @@ namespace emlakdeneme.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("SatildiMi")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Sehir")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -106,9 +147,7 @@ namespace emlakdeneme.Migrations
 
                     b.HasIndex("KullaniciId");
 
-                    b.HasIndex("KullaniciId1");
-
-                    b.ToTable("Ilanlar", (string)null);
+                    b.ToTable("Ilanlar");
                 });
 
             modelBuilder.Entity("emlakdeneme.Models.IlanResim", b =>
@@ -130,7 +169,7 @@ namespace emlakdeneme.Migrations
 
                     b.HasIndex("IlanId");
 
-                    b.ToTable("IlanResimler", (string)null);
+                    b.ToTable("IlanResimler");
                 });
 
             modelBuilder.Entity("emlakdeneme.Models.Kullanici", b =>
@@ -145,6 +184,10 @@ namespace emlakdeneme.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Adres")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -152,10 +195,15 @@ namespace emlakdeneme.Migrations
                     b.Property<int>("RolId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RolId1")
-                        .HasColumnType("int");
+                    b.Property<string>("Sehir")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sifre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -163,9 +211,7 @@ namespace emlakdeneme.Migrations
 
                     b.HasIndex("RolId");
 
-                    b.HasIndex("RolId1");
-
-                    b.ToTable("Kullanicilar", (string)null);
+                    b.ToTable("Kullanicilar");
                 });
 
             modelBuilder.Entity("emlakdeneme.Models.Mesaj", b =>
@@ -186,6 +232,9 @@ namespace emlakdeneme.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("IlanId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Okundu")
                         .HasColumnType("bit");
 
@@ -198,7 +247,9 @@ namespace emlakdeneme.Migrations
 
                     b.HasIndex("GonderenId");
 
-                    b.ToTable("Mesajlar", (string)null);
+                    b.HasIndex("IlanId");
+
+                    b.ToTable("Mesajlar");
                 });
 
             modelBuilder.Entity("emlakdeneme.Models.Odeme", b =>
@@ -224,7 +275,7 @@ namespace emlakdeneme.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Odemeler", (string)null);
+                    b.ToTable("Odemeler");
                 });
 
             modelBuilder.Entity("emlakdeneme.Models.Rol", b =>
@@ -241,7 +292,7 @@ namespace emlakdeneme.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roller", (string)null);
+                    b.ToTable("Roller");
                 });
 
             modelBuilder.Entity("emlakdeneme.Models.Slider", b =>
@@ -266,7 +317,7 @@ namespace emlakdeneme.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Slaytlar", (string)null);
+                    b.ToTable("Slaytlar");
                 });
 
             modelBuilder.Entity("emlakdeneme.Models.Tip", b =>
@@ -283,7 +334,26 @@ namespace emlakdeneme.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tipler", (string)null);
+                    b.ToTable("Tipler");
+                });
+
+            modelBuilder.Entity("Islem", b =>
+                {
+                    b.HasOne("emlakdeneme.Models.Ilan", "Ilan")
+                        .WithMany()
+                        .HasForeignKey("IlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("emlakdeneme.Models.Kullanici", "Kullanici")
+                        .WithMany()
+                        .HasForeignKey("KullaniciId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ilan");
+
+                    b.Navigation("Kullanici");
                 });
 
             modelBuilder.Entity("emlakdeneme.Models.Favori", b =>
@@ -307,17 +377,9 @@ namespace emlakdeneme.Migrations
 
             modelBuilder.Entity("emlakdeneme.Models.Ilan", b =>
                 {
-                    b.HasOne("emlakdeneme.Models.Kullanici", null)
-                        .WithMany()
-                        .HasForeignKey("KullaniciId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("emlakdeneme.Models.Kullanici", "Kullanici")
                         .WithMany()
-                        .HasForeignKey("KullaniciId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("KullaniciId");
 
                     b.Navigation("Kullanici");
                 });
@@ -325,7 +387,7 @@ namespace emlakdeneme.Migrations
             modelBuilder.Entity("emlakdeneme.Models.IlanResim", b =>
                 {
                     b.HasOne("emlakdeneme.Models.Ilan", "Ilan")
-                        .WithMany()
+                        .WithMany("IlanResimler")
                         .HasForeignKey("IlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -335,15 +397,9 @@ namespace emlakdeneme.Migrations
 
             modelBuilder.Entity("emlakdeneme.Models.Kullanici", b =>
                 {
-                    b.HasOne("emlakdeneme.Models.Rol", null)
-                        .WithMany()
-                        .HasForeignKey("RolId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("emlakdeneme.Models.Rol", "Rol")
                         .WithMany()
-                        .HasForeignKey("RolId1")
+                        .HasForeignKey("RolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -364,9 +420,22 @@ namespace emlakdeneme.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("emlakdeneme.Models.Ilan", "Ilan")
+                        .WithMany()
+                        .HasForeignKey("IlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Alici");
 
                     b.Navigation("Gonderen");
+
+                    b.Navigation("Ilan");
+                });
+
+            modelBuilder.Entity("emlakdeneme.Models.Ilan", b =>
+                {
+                    b.Navigation("IlanResimler");
                 });
 #pragma warning restore 612, 618
         }

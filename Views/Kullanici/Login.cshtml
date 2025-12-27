@@ -16,99 +16,164 @@
         body {
             margin: 0;
             height: 100vh;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        .login-wrapper {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* SOL GÖRSEL */
+        .login-image {
+            flex: 1;
+            background-image: url('/images/ev.webp');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* SAĞ ALAN */
+        .login-form {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(to bottom, #87ceeb, #e0f7ff);
-            font-family: Arial, sans-serif;
         }
 
-        .house {
-            position: relative;
-            width: 380px;
-            background: #f4f4f4;
-            border-radius: 0 0 20px 20px;
-            padding: 40px 30px 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,.3);
-        }
-
-        .roof {
-            position: absolute;
-            top: -90px;
-            left: 0;
+        /* KART */
+        .form-box {
             width: 100%;
-            height: 90px;
-            background: #8b0000;
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            max-width: 420px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 14px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
         }
 
-        .door {
-            background: #6b3e26;
-            border-radius: 10px;
-            padding: 25px;
-            color: #fff;
+        /* LOGO */
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-            .door h4 {
-                text-align: center;
-                margin-bottom: 20px;
+            .logo img {
+                height: 45px;
             }
 
-        .form-control {
-            background: rgba(255,255,255,0.85);
-            border: none;
-            margin-bottom: 12px;
+        h3 {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
+
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+
+        .form-control {
+            height: 46px;
+            border-radius: 8px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+            .options a {
+                text-decoration: none;
+                color: #2563eb;
+            }
 
         .btn-login {
-            width: 100%;
-            background: #ffcc00;
-            border: none;
-            font-weight: bold;
-        }
-
-        .knob {
-            position: absolute;
-            right: 25px;
-            top: 55%;
-            width: 12px;
-            height: 12px;
-            background: gold;
-            border-radius: 50%;
-        }
-
-        a {
+            height: 46px;
+            background: #1f2933;
             color: #fff;
-            text-decoration: underline;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+        }
+
+            .btn-login:hover {
+                background: #111827;
+            }
+
+        .register {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+        }
+
+            .register a {
+                text-decoration: none;
+                font-weight: 600;
+                color: #2563eb;
+            }
+
+        /* MOBİL */
+        @@media (max-width: 768px) {
+            .login-image {
+                display: none;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="house">
-        <div class="roof"></div>
+    <div class="login-wrapper">
 
-        <div class="door">
-            <div class="knob"></div>
+        <!-- SOL GÖRSEL -->
+        <div class="login-image"></div>
 
-            <h4>🏠 Eve Giriş</h4>
+        <!-- SAĞ FORM -->
+        <div class="login-form">
+            <div class="form-box">
 
-            <!-- FORM DEĞİŞMEDİ -->
-            <form asp-action="Login" method="post">
-                <input name="email" type="email" class="form-control" placeholder="Email ID" />
-                <input name="sifre" type="password" class="form-control" placeholder="Şifre" />
+                <!-- LOGO -->
+                <div class="logo">
+                    <img src="/images/user.png" alt="Logo" />
+                </div>
 
-                <button type="submit" class="btn btn-login mt-2">
-                    🔑 Kapıyı Aç
-                </button>
-            </form>
+                <h3>Giriş Yap</h3>
+                <div class="subtitle">Hesabınıza güvenle giriş yapın</div>
 
-            <p class="text-center mt-3">
-                Hesabın yok mu?
-                <a asp-action="Register" asp-controller="Kullanici">Kayıt Ol</a>
-            </p>
+                <form asp-action="Login" method="post">
+
+                    <div class="mb-3">
+                        <input name="email" type="email" class="form-control" placeholder="E-posta" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <input name="sifre" type="password" class="form-control" placeholder="Şifre" required />
+                    </div>
+
+                    <div class="options">
+                        <div></div>
+                        <a asp-action="ForgotPassword" asp-controller="Kullanici">
+                            Şifremi Unuttum
+                        </a>
+                    </div>
+
+                    <button type="submit" class="btn btn-login w-100">
+                        Giriş Yap
+                    </button>
+                </form>
+
+                <div class="register">
+                    Hesabın yok mu?
+                    <a asp-action="Register" asp-controller="Kullanici">Kayıt Ol</a>
+                </div>
+
+            </div>
         </div>
+
     </div>
 
 </body>

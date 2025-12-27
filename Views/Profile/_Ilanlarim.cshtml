@@ -1,25 +1,73 @@
-﻿@model List<emlakdeneme.Models.Ilan>
+﻿@* Eğer veritabanından liste çekiyorsan modelini buraya ekle, örn: @model IEnumerable<ProjeAdi.Models.Ilan> *@
 
-<h4>İlanlarım</h4>
-<hr />
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İlanlarım - Modern Görünüm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
 
-<div class="row">
-    @foreach (var ilan in Model)
-    {
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <img src="@ilan.Resim" class="card-img-top">
-                <div class="card-body">
-                    <h6>@ilan.Baslik</h6>
-                    <p>@ilan.Fiyat ₺</p>
+    <div class="max-w-6xl mx-auto">
 
-                    <a asp-controller="Ilan" asp-action="Edit" asp-route-id="@ilan.Id"
-                       class="btn btn-sm btn-warning">Düzenle</a>
+        <nav class="flex flex-wrap justify-between items-center mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-4">
+                <a asp-controller="Home" asp-action="Index" class="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition font-medium">
+                    <i class="fa-solid fa-house"></i>
+                    Ana Sayfa
+                </a>
+                <span class="text-gray-300">|</span>
+                <span class="text-blue-600 font-bold">İlanlarım</span>
+            </div>
 
-                    <a asp-controller="Ilan" asp-action="Delete" asp-route-id="@ilan.Id"
-                       class="btn btn-sm btn-danger">Sil</a>
+            <a asp-controller="Ilan" asp-action="Create" class="bg-blue-600 text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 transition flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-plus"></i>
+                Yeni İlan Ekle
+            </a>
+        </nav>
+
+        <div class="mb-8">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-800 tracking-tight">Kayıtlı İlanlarınız</h1>
+            <p class="text-gray-500 text-sm mt-1">İlanlarınızı buradan düzenleyebilir veya silebilirsiniz.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            @* NOT: Veritabanından veri çekiyorsan burayı @foreach (var item in Model) içine almalısın.
+               ID kısımlarını asp-route-id="@item.Id" şeklinde değiştirmelisin.
+            *@
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition duration-300 group">
+                <div class="relative h-52 bg-gray-200 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=500&q=80" alt="Daire" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <span class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md shadow-lg">Satılık</span>
+                </div>
+
+                <div class="p-6">
+                    <h2 class="text-[15px] font-bold text-gray-800 leading-snug mb-3 min-h-[40px] uppercase">
+                        ATATÜRK MAHALLESİNDE LÜKS 2+1 HAVUZLU DAİRE
+                    </h2>
+                    <div class="flex items-baseline gap-1 mb-5">
+                        <span class="text-2xl font-black text-blue-700">6.250.000</span>
+                        <span class="text-blue-700 font-bold text-lg">₺</span>
+                    </div>
+
+                    
                 </div>
             </div>
+
         </div>
-    }
-</div>
+    </div>
+
+</body>
+</html>

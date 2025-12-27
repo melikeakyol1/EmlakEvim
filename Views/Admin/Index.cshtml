@@ -1,0 +1,74 @@
+﻿@model IEnumerable<emlakdeneme.Models.Ilan>
+@{
+    Layout = null;
+} <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<body class="bg-gray-50 font-sans">
+    <div class="flex">
+        <aside class="w-64 min-h-screen bg-slate-900 text-white p-6">
+            <h1 class="text-2xl font-bold mb-10 text-blue-400">Admin Panel</h1>
+            <nav class="space-y-4">
+                <a href="#" class="block p-3 bg-blue-600 rounded-lg"><i class="fa fa-home mr-2"></i> İlan Yönetimi</a>
+                <a href="#" class="block p-3 hover:bg-slate-800 rounded-lg text-gray-400"><i class="fa fa-users mr-2"></i> Kullanıcılar</a>
+                <a href="/" class="block p-3 hover:bg-slate-800 rounded-lg text-gray-400"><i class="fa fa-eye mr-2"></i> Siteye Dön</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-10">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-extrabold text-slate-800">İlan Onay Merkezi</h2>
+                <div class="text-sm text-slate-500">Hoş geldin, Yönetici</div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                            <th class="p-4 font-semibold text-slate-700">İlan Bilgisi</th>
+                            <th class="p-4 font-semibold text-slate-700">Ekleyen</th>
+                            <th class="p-4 font-semibold text-slate-700">Durum</th>
+                            <th class="p-4 font-semibold text-slate-700 text-right">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        @foreach (var item in Model)
+                        {
+                            <tr class="hover:bg-slate-50/50 transition">
+                                <td class="p-4">
+                                    <div class="font-bold text-slate-800">@item.Baslik</div>
+                                    <div class="text-xs text-blue-600 font-semibold">@item.Fiyat.ToString("N0") ₺</div>
+                                </td>
+                                <td class="p-4 text-sm text-slate-600">@item.Kullanici?.AdSoyad</td>
+                                <td class="p-4">
+                                    @if (item.Onaylandi)
+                                    {
+                                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">Yayında</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold">Onay Bekliyor</span>
+                                    }
+                                </td>
+                                <td class="p-4 text-right flex justify-end gap-2">
+                                    @if (!item.Onaylandi)
+                                    {
+                                        <form asp-action="Onayla" method="post">
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button class="bg-emerald-500 hover:bg-emerald-600 text-white p-2 rounded-lg" title="Onayla"><i class="fa fa-check"></i></button>
+                                        </form>
+                                    }
+                                    <button class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg" title="Düzenle"><i class="fa fa-edit"></i></button>
+                                    <form asp-action="Sil" method="post" onsubmit="return confirm('Emin misiniz?')">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg" title="Sil"><i class="fa fa-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>

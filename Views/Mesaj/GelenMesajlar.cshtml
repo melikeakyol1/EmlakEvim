@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Mesaj>
+
+<div class="container mt-4">
+    <h3>Gelen Mesajlar</h3>
+
+    @foreach (var mesaj in Model)
+    {
+        <div class="card mb-2">
+            <div class="card-body">
+                <h6>Gönderen: @mesaj.Gonderen.AdSoyad | İlan: @mesaj.Ilan.Baslik</h6>
+                <p>@mesaj.Icerik</p>
+                <small>@mesaj.Tarih.ToString("g")</small>
+            </div>
+        </div>
+    }
+</div>

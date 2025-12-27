@@ -1,9 +1,66 @@
 ﻿@model emlakdeneme.Models.Kullanici
 
-<h4>Profil Bilgilerim</h4>
-<hr />
+<div class="space-y-8">
+    <div class="flex justify-between items-center border-b border-gray-100 pb-5">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800">Profil Bilgilerim</h2>
+            <p class="text-sm text-gray-500 mt-1">Hesap bilgilerinizi ve iletişim detaylarınızı buradan yönetebilirsiniz.</p>
+        </div>
+        <button onclick="loadContent('EditProfileForm')" class="flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-xl font-bold hover:bg-blue-600 hover:text-white transition duration-300 border border-blue-100 shadow-sm">
+            <i class="fa-regular fa-pen-to-square"></i> Bilgileri Güncelle
+        </button>
+    </div>
 
-<p><strong>Ad Soyad:</strong> @Model.AdSoyad</p>
-<p><strong>E-posta:</strong> @Model.Email</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-<button class="btn btn-primary btn-sm" onclick="loadContent('EditProfileForm')">Düzenle</button>
+        <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+            <div class="flex items-center gap-3 mb-4 text-blue-600">
+                <i class="fa-solid fa-id-card text-xl"></i>
+                <h3 class="font-bold text-gray-800">Temel Bilgiler</h3>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider">Ad Soyad</label>
+                    <p class="text-gray-900 font-medium mt-1">@Model.AdSoyad</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider">E-posta Adresi</label>
+                    <p class="text-gray-900 font-medium mt-1">@Model.Email</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+            <div class="flex items-center gap-3 mb-4 text-green-600">
+                <i class="fa-solid fa-phone-volume text-xl"></i>
+                <h3 class="font-bold text-gray-800">İletişim Detayları</h3>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider">Telefon Numarası</label>
+                    @* Modelinde Telefon alanı varsa buraya ekle *@
+                    <p class="text-gray-900 font-medium mt-1">@(string.IsNullOrEmpty(Model.Telefon) ? "Belirtilmemiş" : Model.Telefon)</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider">Bulunduğu Şehir</label>
+                    @* Modelinde Sehir alanı varsa buraya ekle *@
+                    <p class="text-gray-900 font-medium mt-1">@(string.IsNullOrEmpty(Model.Sehir) ? "Belirtilmemiş" : Model.Sehir)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:col-span-2 bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+            <div class="flex items-center gap-3 mb-4 text-orange-500">
+                <i class="fa-solid fa-location-dot text-xl"></i>
+                <h3 class="font-bold text-gray-800">Adres Bilgisi</h3>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider">Tam Adres</label>
+                @* Modelinde Adres alanı varsa buraya ekle *@
+                <p class="text-gray-900 font-medium mt-1 leading-relaxed">
+                    @(string.IsNullOrEmpty(Model.Adres) ? "Adres bilgisi henüz eklenmemiş." : Model.Adres)
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

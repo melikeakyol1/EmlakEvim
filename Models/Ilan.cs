@@ -18,5 +18,10 @@
 
         public int? KullaniciId { get; set; }    // nullable yaptık
         public Kullanici? Kullanici { get; set; } // nullable yaptık
+
+        public ICollection<IlanResim> IlanResimler { get; set; }
+
+        public bool SatildiMi { get; set; } = false;      // Satıldı mı?
+        public bool KiralandiMi { get; set; } = false;    // Kiralandı mı?
     }
 }

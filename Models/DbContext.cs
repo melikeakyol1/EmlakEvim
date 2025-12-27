@@ -15,7 +15,7 @@ namespace emlakdeneme.Models
         public DbSet<Rol> Roller { get; set; }
         public DbSet<IlanResim> IlanResimler { get; set; }
         public DbSet<Tip> Tipler { get; set; }
-
+        public DbSet<Islem> Islemler { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

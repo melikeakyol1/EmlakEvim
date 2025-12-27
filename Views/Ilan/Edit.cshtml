@@ -2,38 +2,20 @@
 
 <h2>İlanı Düzenle</h2>
 
-<form asp-action="Edit" method="post">
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+    @Html.AntiForgeryToken()
     <input type="hidden" asp-for="Id" />
 
-    <div class="mb-2">
-        <input asp-for="Baslik" class="form-control" placeholder="Başlık" />
-    </div>
-    <div class="mb-2">
-        <input asp-for="Durum" class="form-control" placeholder="Satılık/Kiralık" />
-    </div>
-    <div class="mb-2">
-        <input asp-for="Tip" class="form-control" placeholder="Daire, Arsa..." />
-    </div>
-    <div class="mb-2">
-        <input asp-for="Sehir" class="form-control" placeholder="Şehir" />
-    </div>
-    <div class="mb-2">
-        <input asp-for="Semt" class="form-control" placeholder="Semt" />
-    </div>
-    <div class="mb-2">
-        <input asp-for="Mahalle" class="form-control" placeholder="Mahalle" />
-    </div>
-    <div class="mb-2">
-        <input asp-for="Fiyat" class="form-control" placeholder="Fiyat" />
-    </div>
-    <div class="mb-2">
-        <input asp-for="Metrekare" class="form-control" placeholder="Metrekare" />
-    </div>
-    <div class="mb-2">
-        <input asp-for="Oda" class="form-control" placeholder="Oda Sayısı" />
-    </div>
-    <div class="mb-2">
-        <input asp-for="Resim" class="form-control" placeholder="Resim URL" />
-    </div>
+    <input asp-for="Baslik" class="form-control mb-2" />
+    <input asp-for="Durum" class="form-control mb-2" />
+    <input asp-for="Tip" class="form-control mb-2" />
+    <input asp-for="Sehir" class="form-control mb-2" />
+    <input asp-for="Semt" class="form-control mb-2" />
+    <input asp-for="Mahalle" class="form-control mb-2" />
+    <input asp-for="Fiyat" class="form-control mb-2" />
+    <input asp-for="Metrekare" class="form-control mb-2" />
+    <input asp-for="Oda" class="form-control mb-2" />
+    <input asp-for="Resim" class="form-control mb-2" />
+
     <button type="submit" class="btn btn-warning">Güncelle</button>
 </form>

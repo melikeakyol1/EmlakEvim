@@ -5,61 +5,108 @@
 
         <!-- SOL TARAF: FOTOĞRAF -->
         <div class="col-md-8">
-            <div class="border">
-                <img src="@Model.Resim"
-                     class="img-fluid w-100"
-                     style="max-height:500px; object-fit:cover;" />
+            <div class="border rounded shadow-sm">
+                <div id="ilanSlider" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @if (Model.IlanResimler != null && Model.IlanResimler.Any())
+                        {
+                            int index = 0;
+                            foreach (var ilanResmi in Model.IlanResimler)
+                            {
+                                <div class="carousel-item @(index == 0 ? "active" : "")">
+                                    <img src="@ilanResmi.ResimYolu" class="d-block w-100" style="max-height:500px; object-fit:cover;" />
+                                </div>
+                                index++;
+                            }
+                        }
+                        else
+                        {
+                            <div class="carousel-item active">
+                                <img src="@Model.Resim" class="d-block w-100" style="max-height:500px; object-fit:cover;" />
+                            </div>
+                        }
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#ilanSlider" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#ilanSlider" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- SAĞ TARAF: İLAN BİLGİLERİ -->
+        <!-- SAĞ TARAF: İLAN BİLGİLERİ VE İŞLEM -->
         <div class="col-md-4">
-            <h4 class="mb-3">İlan Özellikleri</h4>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">İlan Özellikleri</h4>
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item"><strong>Açıklama:</strong> @Model.Baslik</li>
+                        <li class="list-group-item"><strong>Fiyat:</strong> @Model.Fiyat ₺</li>
+                        <li class="list-group-item"><strong>Durum:</strong> @Model.Durum</li>
+                        <li class="list-group-item"><strong>Tip:</strong> @Model.Tip</li>
+                        <li class="list-group-item"><strong>Alan:</strong> @Model.Metrekare m²</li>
+                        <li class="list-group-item"><strong>Oda Sayısı:</strong> @Model.Oda</li>
+                        <li class="list-group-item"><strong>Mahalle:</strong> @Model.Mahalle</li>
+                        <li class="list-group-item"><strong>Semt:</strong> @Model.Semt</li>
+                        <li class="list-group-item"><strong>Şehir:</strong> @Model.Sehir</li>
+                    </ul>
 
-            <table class="table table-bordered">
-                <tr>
-                    <th>Açıklama</th>
-                    <td>@Model.Baslik</td>
-                </tr>
-                <tr>
-                    <th>Fiyat</th>
-                    <td>@Model.Fiyat ₺</td>
-                </tr>
-                <tr>
-                    <th>Durum</th>
-                    <td>@Model.Durum</td>
-                </tr>
-                <tr>
-                    <th>Tip</th>
-                    <td>@Model.Tip</td>
-                </tr>
-                <tr>
-                    <th>Alan</th>
-                    <td>@Model.Metrekare m²</td>
-                </tr>
-                <tr>
-                    <th>Oda Sayısı</th>
-                    <td>@Model.Oda</td>
-                </tr>
-                <tr>
-                    <th>Mahalle</th>
-                    <td>@Model.Mahalle</td>
-                </tr>
-                <tr>
-                    <th>Semt</th>
-                    <td>@Model.Semt</td>
-                </tr>
-                <tr>
-                    <th>Şehir</th>
-                    <td>@Model.Sehir</td>
-                </tr>
-            </table>
+                    <h5>İşlem Yap</h5>
+                    <form asp-action="IslemiYap" method="post">
+                        <input type="hidden" name="ilanId" value="@Model.Id" />
 
-            <a href="tel:02122121212" class="btn btn-success w-100">
-                📞 0212 212 12 12
-            </a>
-        </div>
+                        <div class="mb-3">
+                            <label>Ödeme Yöntemi</label>
+                            <select name="odemeTipi" class="form-select">
+                                <option value="Kredi Kartı">Kredi Kartı</option>
+                                <option value="Banka Havalesi">Banka Havalesi</option>
+                                <option value="Kapıda Ödeme">Kapıda Ödeme</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex gap-2 mb-3">
+                            <button type="submit" name="islemTipi" value="Satın Alma" class="btn btn-success w-50">
+                                Satın Al
+                            </button>
+                            <button type="submit" name="islemTipi" value="Kiralama" class="btn btn-primary w-50">
+                                Kirala
+                            </button>
+                        </div>
+                    </form>
+
+                    <h4>İlan Sahibine Mesaj Gönder</h4>
+                    <form asp-controller="Mesaj" asp-action="Gonder" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="ilanId" value="@Model.Id" />
+                        <div class="mb-3">
+                            <label>Mesajınız</label>
+                            <textarea name="icerik" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Mesaj Gönder</button>
+                    </form>
+
+                    @if (TempData["Mesaj"] != null)
+                    {
+                        <div class="alert alert-success mt-2">@TempData["Mesaj"]</div>
+                    }
+
+                    <h4>Bu ilana gelen mesajlar</h4>
+                    @if (ViewBag.Mesajlar != null)
+                    {
+                        foreach (var mesaj in ViewBag.Mesajlar)
+                        {
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    <strong>@mesaj.Gonderen.AdSoyad:</strong> @mesaj.Icerik
+                                    <br />
+                                    <small>@mesaj.Tarih.ToString("g")</small>
+                                </div>
+                            </div>
+                        }
+                    }
 
     </div>
 </div>
-
