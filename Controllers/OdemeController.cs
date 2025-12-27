@@ -25,7 +25,7 @@ namespace emlakdeneme.Controllers
             return View(odemeler);
         }
 
-        // Yeni ödeme ekle
+        // Yeni ödeme
         [HttpPost]
         public async Task<IActionResult> Create(int kullaniciId, decimal tutar, string odemeYontemi)
         {
