@@ -96,15 +96,12 @@
             });
 
     }
-    // Profil güncelleme işlemini yapan fonksiyon
     function saveProfile() {
         const form = document.getElementById('editProfileForm');
         if (!form) return;
 
-        // Form verilerini alıyoruz
         const formData = new FormData(form);
 
-        // Yükleniyor durumu için butonu pasif yapalım
         const btn = event.target;
         const originalText = btn.innerHTML;
         btn.disabled = true;
@@ -117,7 +114,6 @@
         .then(res => res.text())
         .then(result => {
             if (result.trim() === "success") {
-                // Başarılı ise kullanıcıyı bilgilendir ve profil sayfasına geri dön
                 alert("Bilgileriniz başarıyla güncellendi.");
                 loadContent('ProfilBilgilerim');
             } else {
