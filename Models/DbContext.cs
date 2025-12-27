@@ -20,7 +20,6 @@ namespace emlakdeneme.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            // Mesaj tablosu: cascade delete çakışmasını önle
             modelBuilder.Entity<Mesaj>()
                 .HasOne(m => m.Gonderen)
                 .WithMany()
@@ -33,7 +32,6 @@ namespace emlakdeneme.Models
                 .HasForeignKey(m => m.AliciId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Decimal tipleri için SQL tipi belirt
             modelBuilder.Entity<Ilan>()
                 .Property(i => i.Fiyat)
                 .HasColumnType("decimal(18,2)");
