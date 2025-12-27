@@ -19,16 +19,13 @@ namespace emlakdeneme.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Slider verileri
             var slaytlar = await _context.Slaytlar.ToListAsync();
 
-            // En yeni ilanlar (son eklenen 6 ilan)
             var yeniIlanlar = await _context.Ilanlar
                 .OrderByDescending(i => i.Id)
                 .Take(6)
                 .ToListAsync();
 
-            // ViewModel kullan
             var model = new HomeIndexViewModel
             {
                 Slaytlar = slaytlar,
@@ -38,6 +35,7 @@ namespace emlakdeneme.Controllers
 
             return View(model);
         }
+        // Minor update
     }
 
 }
